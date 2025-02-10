@@ -1,4 +1,10 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
 import { ThemeProvider } from "./components/theme/theme-provider";
 import PublicLayout from "./layouts/PublicLayout";
 import DashboardPage from "./pages/DashboardPage";
@@ -7,32 +13,40 @@ import SymptomPage from "./pages/SymptomPage";
 import VehiclePage from "./pages/VehiclePage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-
 import { action as LoginAction } from "./pages/auth/LoginPage";
 import { action as RegisterAction } from "./pages/auth/RegisterPage";
-
 import { store } from "./store";
+
+const ProtectedRoute = () => {
+  const user = useSelector((state) => state.userState.user);
+  return user ? <Outlet /> : <Navigate to="/login" replace />;
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PublicLayout />,
+    element: <ProtectedRoute />, // Proteksi seluruh halaman kecuali login & register
     children: [
       {
-        index: true,
-        element: <DashboardPage />,
-      },
-      {
-        path: "/reservation",
-        element: <ReservationPage />,
-      },
-      {
-        path: "/symptom",
-        element: <SymptomPage />,
-      },
-      {
-        path: "/vehicle",
-        element: <VehiclePage />,
+        element: <PublicLayout />,
+        children: [
+          {
+            index: true,
+            element: <DashboardPage />,
+          },
+          {
+            path: "reservation",
+            element: <ReservationPage />,
+          },
+          {
+            path: "symptom",
+            element: <SymptomPage />,
+          },
+          {
+            path: "vehicle",
+            element: <VehiclePage />,
+          },
+        ],
       },
     ],
   },
