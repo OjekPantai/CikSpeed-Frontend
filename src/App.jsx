@@ -16,6 +16,8 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import { action as LoginAction } from "./pages/auth/LoginPage";
 import { action as RegisterAction } from "./pages/auth/RegisterPage";
 import { store } from "./store";
+import MechanicPage from "./pages/MechanicPage";
+import HIstoryPage from "./pages/HIstoryPage";
 
 const ProtectedRoute = () => {
   const user = useSelector((state) => state.userState.user);
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
           {
             path: "vehicle",
             element: <VehiclePage />,
+          },
+          {
+            path: "mechanic",
+            element: <MechanicPage />,
+          },
+          {
+            path: "history",
+            element: <HIstoryPage />,
           },
         ],
       },
