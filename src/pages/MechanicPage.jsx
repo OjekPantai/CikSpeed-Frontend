@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useMechanics from "@/hooks/useMechanics";
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, PlusCircle, Trash } from "lucide-react";
 import { useState } from "react";
 
 const MechanicPage = () => {
@@ -31,7 +31,7 @@ const MechanicPage = () => {
   } = useMechanics();
 
   const [deleteAlertOpen, setDeleteAlertOpen] = useState(false);
-  // const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   const handleDeleteClick = (mechanic) => {
@@ -45,7 +45,22 @@ const MechanicPage = () => {
   };
 
   return (
-    <div>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between space-y-2">
+        <h2 className="text-3xl font-bold tracking -tight">
+          Mechanical Management
+        </h2>
+        <Button
+          variant="outline"
+          className="h-8 gap-1"
+          onClick={() => setAddModalOpen(true)}
+        >
+          <PlusCircle className="h-3.5 w-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Tambah Mekanik
+          </span>
+        </Button>
+      </div>
       <Card>
         <CardContent>
           <Table>
