@@ -1,3 +1,4 @@
+import AddMechanicModal from "@/components/fragments/mechanic/AddMechanicModal";
 import DeleteMechanicAlert from "@/components/fragments/mechanic/DeleteMechanicAlert";
 import EditMechanicModal from "@/components/fragments/mechanic/EditMechanicModal";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ const MechanicPage = () => {
     setSelectedMechanic,
     deleteMechanic,
     editMechanic,
+    addMechanic,
   } = useMechanics();
 
   const [deleteAlertOpen, setDeleteAlertOpen] = useState(false);
@@ -126,11 +128,11 @@ const MechanicPage = () => {
         onConfirm={() => deleteMechanic(selectedMechanic.id)}
       />
 
-      {/* <AddVehicleModal
+      <AddMechanicModal
         open={addModalOpen}
         onClose={() => setAddModalOpen(false)}
-        onSubmit={addVehicle}
-      /> */}
+        onSubmit={addMechanic}
+      />
 
       <EditMechanicModal
         open={editModalOpen}

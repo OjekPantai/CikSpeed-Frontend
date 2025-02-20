@@ -35,6 +35,34 @@ const useMechanics = () => {
     }
   };
 
+  const addMechanic = async (newMechanic) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await customApi.post("/mechanics", newMechanic);
+      const addedMechanic = response.data.data || response.data;
+      setMechanics((prevMechanics) => [...prevMechanics, addedMechanic]);
+
+      toast({
+        title: "Success",
+        description: "Mechanic added successfully!",
+      });
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message || err.message || "Failed to add mechanic";
+      setError(errorMessage);
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const deleteMechanic = async (mechanicId) => {
     setLoading(true);
     setError(null);
@@ -108,6 +136,7 @@ const useMechanics = () => {
     fetchMechanics,
     deleteMechanic,
     editMechanic,
+    addMechanic,
   };
 };
 
