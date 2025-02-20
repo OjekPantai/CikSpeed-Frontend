@@ -1,6 +1,7 @@
 import AddMechanicModal from "@/components/fragments/mechanic/AddMechanicModal";
 import DeleteMechanicAlert from "@/components/fragments/mechanic/DeleteMechanicAlert";
 import EditMechanicModal from "@/components/fragments/mechanic/EditMechanicModal";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -49,7 +50,7 @@ const MechanicPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking -tight">
+        <h2 className="text-3xl font-bold tracking-tight">
           Mechanical Management
         </h2>
         <Button
@@ -86,7 +87,17 @@ const MechanicPage = () => {
                 <TableRow key={mechanic.id}>
                   <TableCell>{mechanic.name}</TableCell>
                   <TableCell>{mechanic.phone}</TableCell>
-                  <TableCell>{mechanic.status}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        mechanic.status === "Available"
+                          ? "available"
+                          : "unavailable"
+                      }
+                    >
+                      {mechanic.status}
+                    </Badge>
+                  </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

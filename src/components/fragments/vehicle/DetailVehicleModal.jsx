@@ -11,7 +11,9 @@ const DetailVehicleModal = ({ open, onClose, vehicle }) => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="max-w-lg">
+        {" "}
+        {/* Atur lebar modal */}
         <DialogHeader>
           <DialogTitle>Vehicle Details</DialogTitle>
         </DialogHeader>
