@@ -55,7 +55,7 @@ const VehiclePage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking -tight">
+        <h2 className="text-3xl font-bold tracking-tight">
           Vehicle Management
         </h2>
         <Button
@@ -75,10 +75,10 @@ const VehiclePage = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Brand</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Production Year</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead className="w-1/4">Brand</TableHead>
+                <TableHead className="w-1/4">Type</TableHead>
+                <TableHead className="w-1/4">Production Year</TableHead>
+                <TableHead className="w-1/4">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
