@@ -48,90 +48,96 @@ const MechanicPage = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">
-          Mechanical Management
-        </h2>
-        <Button
-          variant="outline"
-          className="h-8 gap-1"
-          onClick={() => setAddModalOpen(true)}
-        >
-          <PlusCircle className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Tambah Mekanik
-          </span>
-        </Button>
+    <div className="p-6">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between pb-4 border-b dark:border-gray-700">
+          <h2 className="text-3xl font-bold tracking-tight">
+            Mechanical Management
+          </h2>
+          <Button
+            variant="outline"
+            className="h-10 gap-1"
+            onClick={() => setAddModalOpen(true)}
+          >
+            <PlusCircle className="h-3.5 w-3.5" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              Tambah Mekanik
+            </span>
+          </Button>
+        </div>
+
+        <Card>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b dark:border-gray-700">
+                  <TableHead>Name</TableHead>
+                  <TableHead>Phone Number</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mechanics.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={4} className="h-24 text-center">
+                      No mechanics found
+                    </TableCell>
+                  </TableRow>
+                )}
+                {mechanics.map((mechanic) => (
+                  <TableRow
+                    key={mechanic.id}
+                    className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                  >
+                    <TableCell>{mechanic.name}</TableCell>
+                    <TableCell>{mechanic.phone}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={
+                          mechanic.status === "Available"
+                            ? "available"
+                            : "unavailable"
+                        }
+                      >
+                        {mechanic.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuItem
+                            onClick={() => handleEditClick(mechanic)}
+                            className="text-green-600 cursor-pointer"
+                          >
+                            <Edit className="mr-2 h-4 w-4" /> Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleDeleteClick(mechanic)}
+                            className="text-red-600 cursor-pointer"
+                          >
+                            <Trash className="mr-2 h-4 w-4" /> Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
-      <Card>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Phone Number</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {mechanics.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={4} className="h-24 text-center">
-                    No mechanics found
-                  </TableCell>
-                </TableRow>
-              )}
-              {mechanics.map((mechanic) => (
-                <TableRow key={mechanic.id}>
-                  <TableCell>{mechanic.name}</TableCell>
-                  <TableCell>{mechanic.phone}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={
-                        mechanic.status === "Available"
-                          ? "available"
-                          : "unavailable"
-                      }
-                    >
-                      {mechanic.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                          onClick={() => handleEditClick(mechanic)}
-                          className="text-green-600 cursor-pointer"
-                        >
-                          <Edit className="mr-2 h-4 w-4" /> Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => handleDeleteClick(mechanic)}
-                          className="text-red-600 cursor-pointer"
-                        >
-                          <Trash className="mr-2 h-4 w-4" /> Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
 
       <DeleteMechanicAlert
         open={deleteAlertOpen}

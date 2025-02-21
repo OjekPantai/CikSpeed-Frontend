@@ -50,15 +50,15 @@ const SymptomPage = () => {
   };
 
   return (
-    <div>
+    <div className="p-6">
       <div className="space-y-6">
-        <div className="flex items-center justify-between space-y-2">
+        <div className="flex items-center justify-between pb-4 border-b dark:border-gray-700">
           <h2 className="text-3xl font-bold tracking-tight">
             Symptom Management
           </h2>
           <Button
             variant="outline"
-            className="h-8 gap-1"
+            className="h-10 gap-1"
             onClick={() => setAddModalOpen(true)}
           >
             <PlusCircle className="h-3.5 w-3.5" />
@@ -72,7 +72,7 @@ const SymptomPage = () => {
           <CardContent>
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="border-b dark:border-gray-700">
                   <TableHead>Name</TableHead>
                   <TableHead>Description</TableHead>
                   <TableHead>Service Type</TableHead>
@@ -88,11 +88,13 @@ const SymptomPage = () => {
                   </TableRow>
                 )}
                 {symptoms.map((symptom) => (
-                  <TableRow key={symptom.id}>
+                  <TableRow
+                    key={symptom.id}
+                    className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                  >
                     <TableCell>{symptom.name}</TableCell>
                     <TableCell>{symptom.description}</TableCell>
                     <TableCell>{symptom.category}</TableCell>
-
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>

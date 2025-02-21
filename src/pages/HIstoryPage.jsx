@@ -16,27 +16,37 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Eye, MoreHorizontal } from "lucide-react";
-import useReservations from "@/hooks/useReservations";
+import useHistoryReservations from "@/hooks/useHistoryReservations";
 
 const HistoryPage = () => {
-  const { reservations, loading, error } = useReservations();
+  const { historyReservations, loading, error } = useHistoryReservations();
 
   const handleDetailClick = (reservationId) => {
     console.log("Clicked on reservation:", reservationId);
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg font-medium">Loading...</div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-red-500 dark:text-red-400 font-medium">
+          Error: {error}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="p-6">
       <div className="space-y-6">
-        <div className="flex items-center justify-between space-y-2">
+        <div className="flex items-center justify-between pb-4 border-b dark:border-gray-700">
           <h2 className="text-3xl font-bold tracking-tight">
             Reservation History
           </h2>
@@ -55,15 +65,18 @@ const HistoryPage = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {reservations.length === 0 ? (
+                {historyReservations.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center">
                       No reservation history found
                     </TableCell>
                   </TableRow>
                 ) : (
-                  reservations.map((reservation) => (
-                    <TableRow key={reservation.id}>
+                  historyReservations.map((reservation) => (
+                    <TableRow
+                      key={reservation.id}
+                      className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                    >
                       <TableCell>
                         {new Date(reservation.service_date).toLocaleDateString(
                           "id-ID",

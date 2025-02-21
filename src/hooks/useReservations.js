@@ -7,18 +7,41 @@ const useReservations = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [filters, setFilters] = useState({
+    search: "",
+    status: ["Pending", "In Progress"],
+    startDate: "",
+    endDate: "",
+    limit: 10,
+  });
 
   useEffect(() => {
-    fetchHistoryReservations();
-  }, []);
+    fetchReservations();
+  }, [page, filters]);
 
-  const fetchHistoryReservations = async () => {
+  const fetchReservations = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await customApi.get("/reservations/history");
-      console.log(response.data);
-      setReservations(response.data.reservations || []);
+      const queryParams = new URLSearchParams({
+        page,
+        limit: filters.limit,
+        search: filters.search,
+      });
+
+      // Menambahkan status dengan format yang benar
+      filters.status.forEach((status) => queryParams.append("status", status));
+
+      if (filters.startDate) queryParams.append("startDate", filters.startDate);
+      if (filters.endDate) queryParams.append("endDate", filters.endDate);
+
+      const response = await customApi.get(
+        `/reservations?${queryParams.toString()}`
+      );
+      setReservations(response.data.reservations);
+      setTotalPages(response.data.totalPages);
     } catch (err) {
       const errorMessage =
         err.response?.data?.message ||
@@ -35,7 +58,17 @@ const useReservations = () => {
     }
   };
 
-  return { reservations, fetchHistoryReservations, loading, error };
+  return {
+    reservations,
+    loading,
+    error,
+    page,
+    totalPages,
+    setPage,
+    filters,
+    setFilters,
+    refresh: fetchReservations,
+  };
 };
 
 export default useReservations;

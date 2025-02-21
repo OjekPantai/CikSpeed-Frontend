@@ -8,17 +8,24 @@ const useVehicles = () => {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState("");
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     fetchVehicles();
-  }, []);
+  }, [page, limit, search]);
 
   const fetchVehicles = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await customApi.get("/vehicles");
+      const response = await customApi.get("/vehicles", {
+        params: { page, limit, search }, // Kirim page, limit, dan search sebagai parameter
+      });
       setVehicles(response.data.data || response.data);
+      setTotalPages(response.data.totalPages); // Set total halaman
     } catch (err) {
       const errorMessage =
         err.response?.data?.message ||
@@ -33,6 +40,11 @@ const useVehicles = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateSearch = (newSearch) => {
+    setSearch(newSearch);
+    setPage(1); // Reset ke halaman 1 saat melakukan pencarian
   };
 
   const addVehicle = async (newVehicle) => {
@@ -144,6 +156,13 @@ const useVehicles = () => {
     loading,
     error,
     editVehicle,
+    page,
+    setPage,
+    limit,
+    setLimit,
+    totalPages,
+    search,
+    updateSearch,
   };
 };
 
