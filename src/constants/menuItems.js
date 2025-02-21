@@ -5,6 +5,7 @@ import {
   Car,
   Wrench,
   History,
+  Users,
 } from "lucide-react";
 
 export const menuItems = [
@@ -14,4 +15,5 @@ export const menuItems = [
   { icon: Car, label: "Kendaraan", path: "/vehicle" },
   { icon: Wrench, label: "Mekanik", path: "/mechanic" },
   { icon: History, label: "Riwayat", path: "/history" },
+  { icon: Users, label: "Pelanggan", path: "/user" },
 ];
